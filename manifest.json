@@ -1,6 +1,6 @@
 {
-  "name": "PingPong",
-  "short_name": "PingPong",
+  "name": "Tic Tac Toe",
+  "short_name": "Tic Tac Toe",
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
   "display": "standalone",
