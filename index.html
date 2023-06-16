@@ -1,8 +1,121 @@
 <html>
-  <body>
-    <p>Überschrift</p>
-    Hello <br>
-    ein Branch<br>
-    2. Branch
-  </body>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            background-color: #ddd;
+        }
+
+        .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            cursor: pointer;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="board"></div>
+    <button id="new-game-btn">Neues Spiel starten</button>
+
+    <script>
+        // Spieler
+        const PLAYER_X = 'X';
+        const PLAYER_O = 'O';
+
+        let currentPlayer = PLAYER_X;
+        let gameOver = false;
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let round = 1;
+
+        const boardElement = document.querySelector('.board');
+        const newGameBtn = document.querySelector('#new-game-btn');
+
+        // Zelle anklicken
+        function cellClick(index) {
+            if (board[index] === '' && !gameOver) {
+                board[index] = currentPlayer;
+                render();
+                if (checkWin()) {
+                    gameOver = true;
+                    alert('Spieler ' + currentPlayer + ' hat gewonnen die Runde ' + round + '!');
+                } else if (checkDraw()) {
+                    gameOver = true;
+                    alert('Unentschieden in der Runde ' + round + '!');
+                } else {
+                    togglePlayer();
+                }
+            }
+        }
+
+        // Spieler wechseln
+        function togglePlayer() {
+            currentPlayer = currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
+        }
+
+        // Überprüfen, ob ein Spieler gewonnen hat
+        function checkWin() {
+            const winningCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Reihen
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Spalten
+                [0, 4, 8], [2, 4, 6] // Diagonalen
+            ];
+
+            for (const combination of winningCombinations) {
+                const [a, b, c] = combination;
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Überprüfen, ob es ein Unentschieden gibt
+        function checkDraw() {
+            return !board.includes('');
+        }
+
+        // Spielbrett rendern
+        function render() {
+            boardElement.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.textContent = board[i];
+                cell.addEventListener('click', () => cellClick(i));
+                boardElement.appendChild(cell);
+            }
+        }
+
+        // Spiel initialisieren
+        function initializeGame() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = PLAYER_X;
+            gameOver = false;
+            round = 1;
+            render();
+        }
+
+        // Neues Spiel starten
+        function startNewGame() {
+            initializeGame();
+        }
+
+        // Event-Listener für den Neues Spiel-Button
+        newGameBtn.addEventListener('click', startNewGame);
+
+        // Spiel initial rendern
+        initializeGame();
+    </script>
+</body>
 </html>
