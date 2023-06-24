@@ -1,6 +1,8 @@
 ChatGPT Hilfestellung:
 Fragestellung von mir:
-Programmiere den folgenden Code so um, das er mittels GitHub als PWA auf Handy funktioniert. <!DOCTYPE html>
+Programmiere den folgenden Code so um, das er mittels GitHub als PWA auf Handy funktioniert.
+
+<!DOCTYPE html>
 <html lang="de">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
